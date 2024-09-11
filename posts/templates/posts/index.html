@@ -2,21 +2,15 @@
 {% load static %}
 
 {% block title %}
-    My Blog
+My Blog
 {% endblock %}
 
 {% block css_files %}
+    <link rel="stylesheet" href="{% static 'posts/posts.css' %}" />
     <link rel="stylesheet" href="{% static 'posts/index.css' %}" />
 {% endblock %}
 
 {% block content %}
-    <header id="main-navigation">
-        <h1><a href="">Winifred's Blog</a></h1>
-        <nav>
-            <a href="">All Posts</a>
-        </nav>
-    </header>
-
     <section id="welcome">
         <header>
             <img src="{% static 'posts/images/bluestar.jpg' %}" alt="Winifred - The Author Of This Blog" />
@@ -29,19 +23,9 @@
         <h2>My Latest Thoughts</h2>
 
         <ul>
-            <li>
-                <article class="post">
-                    <a href="">
-                        <img src="{% static 'posts/images/swords.png' %}", alt="Cooking" />
-                        <div class="post__content">
-                            <h3>My Dinner</h3>
-                            <p>
-                                Curry is the best!
-                            </p>
-                        </div>
-                    </a>
-                </article>
-            </li>
+            {% for post in posts %}
+                {% include "posts/includes/post.html" %}
+            {% endfor %}
         </ul>
     </section>
 
