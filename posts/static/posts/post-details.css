@@ -1,9 +1,9 @@
 body {
-    background-color: #e7e7e7;
+    background-color: #f1f2f2;
   }
   
   #main-navigation {
-    background-color: #390281;
+    background-color: #2d7282;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   }
   
@@ -13,7 +13,7 @@ body {
     width: 90%;
     max-width: 90rem;
     border-radius: 16px;
-    background-color: #5706c0;
+    background-color: #00adc1;
     position: relative;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     height: 22rem;
@@ -69,7 +69,7 @@ body {
 
   .tag {
     background-color: white;
-    color: #390281;
+    color: #2d7282;
     padding: 0.5rem 1rem;
     border-radius: 8px;
   }
