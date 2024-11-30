@@ -7,19 +7,15 @@
 
 {% block css_files %}
     <link rel="stylesheet" href="{% static "posts/post-details.css" %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/monokai.min.css">
 {% endblock %}
 
 {% block content %}
     <section id="summary">
         <h2>{{ post.title }}</h2>
-        <div>
-            {% for tag in post.tags %}
-                <span class="tags">{{ tag.caption }}</span>
-            {% endfor %}
-        </div>
         <article>
-            <img src="{% static "posts/images/"|add:post.image_name %}" alt="{{ post.title }}" />
-            <address>By <a href="mailto:{{ post.author.email_address }}">{{ post.author }}</address>
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" />
+            <address>By {{ post.author }}</address>
             <div>
                 Last updated on <time>{{ post.date|date:"d M Y" }}</time>
             </div>
@@ -27,6 +23,6 @@
     </section>
 
     <main>
-        {{ post.content|linebreaks }}
+        {{ post_content_html|safe }}
     </main>
 {% endblock %}

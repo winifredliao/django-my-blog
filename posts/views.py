@@ -1,5 +1,5 @@
+import markdown
 from django.shortcuts import render, get_object_or_404
-
 from .models import Post
 
 def starting_page(request):
@@ -16,7 +16,9 @@ def posts(request):
 
 def post_detail(request, slug):
     identified_post = get_object_or_404(Post, slug=slug)
+    post_content_html = markdown.markdown(identified_post.content, extensions=["fenced_code", "codehilite"])
     return render(request, "posts/post-detail.html", {
       "post": identified_post,
+      "post_content_html": post_content_html,
       "post_tags": identified_post.tags.all()
     })
