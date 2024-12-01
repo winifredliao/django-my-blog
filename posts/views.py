@@ -1,24 +1,35 @@
 import markdown
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView
+
 from .models import Post
 
-def starting_page(request):
-    latest_posts = Post.objects.all().order_by("-date")[:3]
-    return render(request, "posts/index.html", {
-      "posts": latest_posts
-    })
+class StartingPageView(ListView):
+    template_name = "posts/index.html"
+    model = Post
+    ordering = ["-date"]
+    context_object_name = "posts"
 
-def posts(request):
-    all_posts = Post.objects.all().order_by("-date")
-    return render(request, "posts/all-posts.html", {
-      "all_posts": all_posts
-    })
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        data = queryset[:3]
+        return data
 
-def post_detail(request, slug):
-    identified_post = get_object_or_404(Post, slug=slug)
-    post_content_html = markdown.markdown(identified_post.content, extensions=["fenced_code", "codehilite"])
-    return render(request, "posts/post-detail.html", {
-      "post": identified_post,
-      "post_content_html": post_content_html,
-      "post_tags": identified_post.tags.all()
-    })
+class AllPostsView(ListView):
+    template_name = "posts/all-posts.html"
+    model = Post
+    ordering = ["-date"]
+    context_object_name = "all_posts"
+
+class SinglePostView(DetailView):
+    template_name = "posts/post-detail.html"
+    model = Post
+
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        identified_post = context["post"]
+        context["post_content_html"] = markdown.markdown(
+            identified_post.content, extensions=["fenced_code", "codehilite"]
+        )
+        context["post_tags"] = identified_post.tags.all()
+        return context
