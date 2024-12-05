@@ -1,8 +1,10 @@
 import markdown
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
+from django.views import View
 
 from .models import Post
+from .forms import CommentForm
 
 class StartingPageView(ListView):
     template_name = "posts/index.html"
@@ -32,4 +34,5 @@ class SinglePostView(DetailView):
             identified_post.content, extensions=["fenced_code", "codehilite"]
         )
         context["post_tags"] = identified_post.tags.all()
+        context["comment_form"] = CommentForm()
         return context
